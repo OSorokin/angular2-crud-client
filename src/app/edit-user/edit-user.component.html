@@ -1,4 +1,11 @@
-<a class="btn btn-default" routerLink="" role="button">К списку</a>
+<div class="row">
+  <div class="col-xs-4 col-sm-4 col-md-4">
+    <a class="btn btn-default" routerLink="" role="button">К списку</a>
+  </div>
+  <div class="col-xs-8 col-sm-8 col-md-8">
+    <h4 class="pull-right" *ngIf="user">USER ID:{{user.id}}</h4>
+  </div>
+</div>
 <hr/>
 <div *ngIf="user">
   <form>
@@ -17,7 +24,7 @@
       </div>
     </div>
     <div class="form-group">
-      <my-date-picker name="birth_date" placeholder="Дата рождения" [options]="myDatePickerOptions"
+      <my-date-picker name="birth_date" placeholder="Дата рождения" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event)"
                       [(ngModel)]="user.birth_date" #birth_date="ngModel" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
       <div [hidden]="birth_date.pristine == true || birth_date.valid == false" class="valid-error">
         Некорректная дата рождения
@@ -36,7 +43,7 @@
       </div>
     </div>
     <div class="form-group">
-      <select class="form-control" name="position" [(ngModel)]="user.position" #post="ngModel" required>
+      <select class="form-control" name="position" [(ngModel)]="user.position" #position="ngModel" required>
         <option *ngFor="let position of positions" [value]="position"  >{{position}}</option>
       </select>
     </div>
@@ -45,7 +52,18 @@
         <option *ngFor="let project of projects" [value]="project" >{{project}}</option>
       </select>
     </div>
-    <button type="submit" [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid"
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <button type="submit" [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid "
             class="btn btn-default" (click)="updateUser()">Изменить</button>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8">
+          <div [ngSwitch]="isSuccessUpdateUser">
+            <template [ngSwitchCase]="true"><div class="alert-send alert-danger" >Не удалось изменить данные</div></template>
+            <template [ngSwitchCase]="false"><div class="alert-send alert-success" >Данные изменены</div></template>
+            <template ngSwitchDefault></template>
+          </div>
+        </div>
+      </div>
   </form>
 </div>

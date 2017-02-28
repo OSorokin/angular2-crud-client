@@ -7,7 +7,7 @@ export const datePickerOptions: IMyOptions = {
   firstDayOfWeek: "mo",
   sunHighlight: true,
   indicateInvalidDate:false,
-  inputValueRequired:true,
+  inputValueRequired:false,
   selectionTxtFontSize: '16px'
 };
 

@@ -34,8 +34,9 @@
       Некорректный email
     </div>
   </div>
+
   <div class="form-group">
-    <select class="form-control" name="position" [(ngModel)]="user.position" #post="ngModel" required>
+    <select class="form-control" name="position" [(ngModel)]="user.position" #position="ngModel" required>
       <option *ngFor="let position of positions" [value]="position"  >{{position}}</option>
     </select>
   </div>
@@ -44,7 +45,20 @@
       <option *ngFor="let project of projects" [value]="project" >{{project}}</option>
     </select>
   </div>
-  <button type="submit" [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid"
-          class="btn btn-default" (click)="addUser()">Добавить</button>
+
+  <div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4">
+      <button type="submit" [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid || gender.pristine || project.pristine || position.pristine "
+              class="btn btn-default" (click)="addUser()">Добавить</button>
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8">
+      <div [ngSwitch]="isSuccessAddUser">
+        <template [ngSwitchCase]="true"><div class="alert-send alert-danger" >Не удалось добавить пользователя</div></template>
+        <template [ngSwitchCase]="false"><div class="alert-send alert-success" >Пользователь добавлен</div></template>
+        <template ngSwitchDefault></template>
+      </div>
+    </div>
+  </div>
+
 </form>
 

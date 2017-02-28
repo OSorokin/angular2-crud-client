@@ -4,6 +4,7 @@ import {UsersService} from "../services/users.service";
 import {Gender} from "../models/gender.enum";
 import {IMyOptions, IMyDateModel} from 'mydatepicker';
 import {datePickerOptions} from '../options/date-picker-options';
+import {isSuccess} from "@angular/http/src/http_utils";
 
 @Component({
   selector: 'app-add-user',
@@ -19,7 +20,9 @@ export class AddUserComponent implements OnInit {
   positions: string[] = ["Post1", "Post2", "Post3"];
   user: User = new User();
   keys: Gender[] = [Gender.MAN,Gender.WOMAN];
-  new_user_birth_date:string;
+  _user_birth_date:string;
+
+  isSuccessAddUser;
 
   constructor(private userService: UsersService) {
 
@@ -29,14 +32,15 @@ export class AddUserComponent implements OnInit {
   }
 
   addUser(){
-    var new_user = this.user;
-    new_user.birth_date =  this.new_user_birth_date;
-    this.userService.create(new_user);
+    var _user = this.user;
+    _user.birth_date = this._user_birth_date;
+    this.userService.create(_user).then(res => {
+        this.isSuccessAddUser = isSuccess(res.id);
+    })
   }
 
   onDateChanged(event: IMyDateModel) {
-   this.new_user_birth_date = event.date.day +'/'+ event.date.month +'/'+ event.date.year;
-   console.log(this.new_user_birth_date);
+   this._user_birth_date = event.date.day +'/'+ event.date.month +'/'+ event.date.year;
   }
 
 }

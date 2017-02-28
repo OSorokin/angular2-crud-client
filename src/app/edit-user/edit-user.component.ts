@@ -6,6 +6,8 @@ import {User} from "../models/user";
 import {UsersService} from "../services/users.service";
 import {Gender} from "../models/gender.enum";
 import {datePickerOptions} from '../options/date-picker-options';
+import {isSuccess} from "@angular/http/src/http_utils";
+import {IMyDateModel} from "mydatepicker";
 
 @Component({
   selector: 'app-edit-user',
@@ -16,13 +18,14 @@ import {datePickerOptions} from '../options/date-picker-options';
 export class EditUserComponent implements OnInit {
 
    id:number;
-   errorMessage: string;
    user: User;
    projects: string[] = ["Project1", "Project2", "Project3"];
    positions: string[] = ["Post1", "Post2", "Post3"];
    keys: Gender[] = [Gender.MAN,Gender.WOMAN];
+  _user_birth_date:string;
 
    myDatePickerOptions = datePickerOptions;
+   isSuccessUpdateUser;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +39,15 @@ export class EditUserComponent implements OnInit {
   }
 
   updateUser(){
-    this.userService.update(this.id,this.user);
+    var _user = this.user;
+    _user.birth_date = this._user_birth_date;
+    this.userService.update(this.id,_user).then(res => {
+      this.isSuccessUpdateUser = isSuccess(res.id);
+    });
+  }
+
+  onDateChanged(event: IMyDateModel) {
+    this._user_birth_date = event.date.day +'/'+ event.date.month +'/'+ event.date.year;
   }
 
 
