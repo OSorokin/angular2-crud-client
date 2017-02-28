@@ -1,0 +1,37 @@
+<a class="btn btn-primary" routerLink="/add_user" role="button">Добавить пользователя</a>
+<hr/>
+<div class="table-responsive">
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th class="hidden-xs">Дата рождения</th>
+      <th class="hidden-xs">Пол</th>
+      <th class="hidden-xs" >Email</th>
+      <th>Пост</th>
+      <th>Проект</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users" >
+      <th>{{user?.id}}</th>
+      <td>{{user?.name}}</td>
+      <td>{{user?.surname}}</td>
+      <th class="hidden-xs">{{user?.birth_date}}</th>
+      <td class="hidden-xs">{{userService.genderStringToStringRus(user.gender)}}</td>
+      <td class="hidden-xs" >{{user?.email}}</td>
+      <td>{{user?.position}}</td>
+      <td>{{user?.project}}</td>
+      <td>
+        <button type="button" class="close" aria-hidden="true" [routerLink]="['/edit_user', user?.id]" ><span class="glyphicon glyphicon-pencil"></span></button>
+      </td>
+      <td>
+        <button type="button" class="close" aria-hidden="true" (click)="deleteUser(user)"><span class="glyphicon glyphicon-remove"></span></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
