@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="form-group">
-    <my-date-picker name="birth_date" placeholder="Дата рождения"  [options]="myDatePickerOptions"  (dateChanged)="onDateChanged($event)"
+    <my-date-picker name="birth_date"  [options]="myDatePickerOptions" placeholder="Дата рождения" (dateChanged)="onDateChanged($event)"
                     [(ngModel)]="user.birth_date" #birth_date="ngModel" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
     <div [hidden]="birth_date.pristine == true || birth_date.valid == false" class="valid-error">
       Некорректная дата рождения
