@@ -1,35 +1,39 @@
 <a class="btn btn-default" routerLink="" role="button">К списку</a>
 <hr/>
-<form >
+<form>
   <div class="form-group">
-    <input name="name" [(ngModel)]="user.name" class="form-control"  placeholder="Имя"
-           #name="ngModel" required >
+    <input name="name" [(ngModel)]="user.name" class="form-control" placeholder="Имя"
+           #name="ngModel" required>
     <div [hidden]="name.valid || name.untouched" class="valid-error">
       Не указано имя
     </div>
   </div>
   <div class="form-group">
-    <input name="surname" [(ngModel)]="user.surname" class="form-control"  placeholder="Фамилия"
-           #surname="ngModel" required >
+    <input name="surname" [(ngModel)]="user.surname" class="form-control" placeholder="Фамилия"
+           #surname="ngModel" required>
     <div [hidden]="surname.valid || surname.untouched" class="valid-error">
       Не указана фамилия
     </div>
   </div>
   <div class="form-group">
-    <my-date-picker name="birth_date"  [options]="myDatePickerOptions" placeholder="Дата рождения" (dateChanged)="onDateChanged($event)"
-                    [(ngModel)]="user.birth_date" #birth_date="ngModel" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
-    <div [hidden]="birth_date.pristine == true || birth_date.valid == false" class="valid-error">
+    <my-date-picker name="birthDate" [options]="myDatePickerOptions" placeholder="Дата рождения"
+                    (dateChanged)="onDateChanged($event)"
+                    [(ngModel)]="user.birthDate" #birthDate="ngModel"
+                    pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
+    <div [hidden]="birthDate.pristine == true || birthDate.valid == false" class="valid-error">
       Некорректная дата рождения
     </div>
   </div>
   <div class="form-group">
     <select class="form-control" name="gender" [(ngModel)]="user.gender" #gender="ngModel" required>
-      <option *ngFor="let item of keys" [value]="userService.genderToString(item)" >{{userService.genderToStringRus(item)}}</option>
+      <option *ngFor="let item of keys" [value]="userService.genderToString(item)">
+        {{userService.genderToStringRus(item)}}
+      </option>
     </select>
   </div>
   <div class="form-group">
-    <input name="email" [(ngModel)]="user.email" class="form-control"  placeholder="E-mail"
-           #email="ngModel" required pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$" />
+    <input name="email" [(ngModel)]="user.email" class="form-control" placeholder="E-mail"
+           #email="ngModel" required pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"/>
     <div [hidden]="email.valid || email.untouched" class="valid-error">
       Некорректный email
     </div>
@@ -37,26 +41,25 @@
 
   <div class="form-group">
     <select class="form-control" name="position" [(ngModel)]="user.position" #position="ngModel" required>
-      <option *ngFor="let position of positions" [value]="position"  >{{position}}</option>
+      <option *ngFor="let position of positions" [value]="position">{{position}}</option>
     </select>
   </div>
   <div class="form-group">
     <select class="form-control" name="project" [(ngModel)]="user.project" #project="ngModel" required>
-      <option *ngFor="let project of projects" [value]="project" >{{project}}</option>
+      <option *ngFor="let project of projects" [value]="project">{{project}}</option>
     </select>
   </div>
 
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4">
-      <button type="submit" [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid || gender.pristine || project.pristine || position.pristine "
-              class="btn btn-default" (click)="addUser()">Добавить</button>
+      <button type="submit"
+              [disabled]="name.invalid || surname.invalid || birthDate.pristine == true || birthDate.invalid == false || email.invalid || gender.pristine || project.pristine || position.pristine "
+              class="btn btn-default" (click)="addUser()">Добавить
+      </button>
     </div>
     <div class="col-xs-8 col-sm-8 col-md-8">
-      <div [ngSwitch]="isSuccessAddUser">
-        <template [ngSwitchCase]="true"><div class="alert-send alert-danger" >Не удалось добавить пользователя</div></template>
-        <template [ngSwitchCase]="false"><div class="alert-send alert-success" >Пользователь добавлен</div></template>
-        <template ngSwitchDefault></template>
-      </div>
+      <div *nfIf="isSuccessAddUser" class="alert-send alert-success">Пользователь добавлен</div>
+      <div *nfIf="isSErrorAddUser" class="alert-send alert-danger">Не удалось добавить пользователя</div>
     </div>
   </div>
 
