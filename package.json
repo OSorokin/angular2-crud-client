@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "start": "ng",
-    "start": "ng serve --host 0.0.0.0 --port 9000",
+    "start:2": "ng serve --host 0.0.0.0 --port 9000 --live-reload-port 49153",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor"

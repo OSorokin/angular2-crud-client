@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { isSuccess } from '@angular/http/src/http_utils';
 
-import { UsersService } from '../services/users.service';
-import { User } from '../models/user';
-import { Gender } from '../models/gender.enum';
+import { UsersService } from '../../shared/users/users.service';
+import { User } from '../../shared/users/user.model';
+import { Gender } from '../../shared/users/gender.enum';
 
 import { IMyDateModel } from 'mydatepicker';
-import { datePickerOptions } from '../options/date-picker-options';
+import { datePickerOptions } from '../../shared/date-picker-options';
 
 @Component({
+  moduleId: module.id,
   selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['add-user.component.sass'],
-  providers: [UsersService]
+  templateUrl: 'add-user.component.html'
 })
 
-export class AddUserComponent implements OnInit {
+export class AddUserComponent {
 
   myDatePickerOptions = datePickerOptions;
 
@@ -26,22 +25,20 @@ export class AddUserComponent implements OnInit {
   userBirthDate: string;
 
   isSuccessAddUser = false;
-  isSErrorAddUser = false;
+  isErrorAddUser = false;
 
-  constructor(private userService: UsersService) {}
+  constructor(public userService: UsersService) {}
 
-  ngOnInit() {
-  }
-
-  addUser() {
+  addUser(): void {
     const user = this.user;
-    user.birthDate = this.userBirthDate;
+    user.birth_date = this.userBirthDate;
     this.userService.create(user).then(res => {
-      this.isSuccessAddUser = isSuccess(res.id);
+      this.isSuccessAddUser = !isSuccess(res.id);
+      this.isErrorAddUser = isSuccess(res.id);
     });
   }
 
-  onDateChanged(event: IMyDateModel) {
+  onDateChanged(event: IMyDateModel): void {
     this.userBirthDate = event.date.day + '/' + event.date.month + '/' + event.date.year;
   }
 
