@@ -3,8 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { isSuccess } from '@angular/http/src/http_utils';
 import { IMyDateModel } from 'mydatepicker';
 
-import { UsersService } from '../../shared/users/users.service';
-import { User } from '../../shared/users/user.model';
+import { UsersService } from '../../shared/services/users.service';
+import { User } from '../../shared/models/user.model';
 import { datePickerOptions } from '../../shared/date-picker-options';
 
 @Component({
