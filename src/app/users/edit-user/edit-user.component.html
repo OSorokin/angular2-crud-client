@@ -34,8 +34,8 @@
     </div>
     <div class="form-group">
       <select class="form-control" name="gender" [(ngModel)]="user.gender" #gender="ngModel" required>
-        <option *ngFor="let item of keys" [value]="userService.genderToString(item)">
-          {{userService.genderToStringRus(item)}}
+        <option *ngFor="let item of genders" [value]="item">
+          {{item}}
         </option>
       </select>
     </div>
@@ -65,7 +65,7 @@
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8">
         <div *ngIf="isSuccessUpdateUser" class="alert-send alert-success">Данные изменены</div>
-        <div *ngIf="isErrorUpdateser" class="alert-send alert-danger">Не удалось изменить данные</div>
+        <div *ngIf="isErrorUpdateUser" class="alert-send alert-danger">Не удалось изменить данные</div>
       </div>
     </div>
   </form>

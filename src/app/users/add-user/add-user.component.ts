@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { isSuccess } from '@angular/http/src/http_utils';
+import { IMyDateModel } from 'mydatepicker';
 
 import { UsersService } from '../../shared/users/users.service';
 import { User } from '../../shared/users/user.model';
-import { Gender } from '../../shared/users/gender.enum';
-
-import { IMyDateModel } from 'mydatepicker';
 import { datePickerOptions } from '../../shared/date-picker-options';
 
 @Component({
@@ -20,8 +18,8 @@ export class AddUserComponent {
 
   projects: string[] = ['Project1', 'Project2', 'Project3'];
   positions: string[] = ['Post1', 'Post2', 'Post3'];
+  genders: string [] = ['Мужской', 'Женский'];
   user: User = new User();
-  keys: Gender[] = [Gender.MAN, Gender.WOMAN];
   userBirthDate: string;
 
   isSuccessAddUser = false;
@@ -32,7 +30,8 @@ export class AddUserComponent {
   addUser(): void {
     const user = this.user;
     user.birth_date = this.userBirthDate;
-    this.userService.create(user).then(res => {
+
+    this.userService.create(user).subscribe(res => {
       this.isSuccessAddUser = !isSuccess(res.id);
       this.isErrorAddUser = isSuccess(res.id);
     });

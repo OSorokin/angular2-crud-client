@@ -1,11 +1,10 @@
-import { Gender } from './gender.enum';
 export class User {
 
   id: number;
   name: string;
   surname: string;
   birth_date: string;
-  gender: Gender;
+  gender: string;
   email: string;
   position: string;
   project: string;

@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { Router } from '@angular/router';
 import { User } from '../../shared/users/user.model';
 import { UsersService } from '../../shared/users/users.service';
+
 
 @Component({
   moduleId: module.id,
   selector: 'app-users-list',
-  templateUrl: 'users-list.component.html',
+  templateUrl: 'users-list.component.html'
 })
 
 export class UsersListComponent implements OnInit {
 
-  users: User[];
+  users: Array<User>;
 
-  constructor(public userService: UsersService, private router: Router, private route: ActivatedRoute ) {
+  constructor(public userService: UsersService, private router: Router) {
 
   }
 
   ngOnInit() {
-    this.userService.getUsers().then(users => this.users = users);
+    this.getUsers();
   }
 
   editUser(user): void {
@@ -27,9 +27,13 @@ export class UsersListComponent implements OnInit {
   }
 
   deleteUser(user): void {
-    this.userService.delete(user.id).then(() => {
-      this.userService.getUsers().then(users => this.users = users);
+    this.userService.delete(user.id).subscribe( () => {
+      this.getUsers();
     });
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe(users => this.users = users);
   }
 
 

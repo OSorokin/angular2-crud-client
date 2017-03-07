@@ -1,21 +1,14 @@
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-
+import { Http, Response, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-
 import { User } from './user.model';
-import { Gender } from './gender.enum';
+import { api as usersApi } from '../../core/users.api';
 
 @Injectable()
 export class UsersService {
 
-  private usersUrl = 'http://localhost:3000/users';
   private headers = new Headers({'Content-Type': 'application/json'});
-  private options = new RequestOptions({headers: this.headers});
 
   static handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
@@ -31,92 +24,38 @@ export class UsersService {
     return Observable.throw(errMsg);
   }
 
-  constructor(private http: Http) {
-  }
+  constructor(private http: Http) {}
 
-  getUsers(): Promise<User[]> {
-    return this.http.get(this.usersUrl)
-      .toPromise()
-      .then(response => response.json().data as User[])
+  getUsers(): Observable<User[]> {
+    return this.http.get(usersApi.url)
+      .map(response => response.json().data as Array<User>)
       .catch(UsersService.handleError);
   }
 
-  getUser(id: number): Promise<User> {
-    console.log(this.usersUrl + '/' + id);
-    return this.http.get(this.usersUrl + '/' + id)
-      .toPromise()
-      .then(response => response.json().data as User)
+  getUser(id: number): Observable<User> {
+    return this.http.get(usersApi.url + '/' + id)
+      .map(response => response.json().data as User)
       .catch(UsersService.handleError);
   }
 
-  create(user: User): Promise<User> {
+  create(user: User): Observable<User> {
     return this.http
-      .post(this.usersUrl, user, {headers: this.headers})
-      .toPromise()
-      .then(response => response.json().data as User)
+      .post(usersApi.url, user, {headers: this.headers})
+      .map(response => response.json().data as User)
       .catch(UsersService.handleError);
   }
 
-  update(id: number, user: User): Promise<User> {
-
+  update(id: number, user: User): Observable<User> {
     return this.http
-      .put(this.usersUrl + '/' + id, JSON.stringify(user), {headers: this.headers})
-      .toPromise()
-      .then(response => response.json().data as User)
+      .put(usersApi.url + '/' + id, user, {headers: this.headers})
+      .map(response => response.json().data as User)
       .catch(UsersService.handleError);
   }
 
-  delete(id: number): Promise<User> {
-    return this.http.delete(this.usersUrl + '/' + id)
-      .toPromise()
-      .then(response => response.json().data as User)
+  delete(id: number): Observable<User> {
+    return this.http.delete(usersApi.url + '/' + id)
+      .map(response => response.json().data as User)
       .catch(UsersService.handleError);
-  };
-
-  genderToStringRus(gender: Gender): string {
-
-    let result: string;
-
-    switch (gender) {
-      case Gender.MAN:
-        result = 'Мужской';
-        break;
-      case Gender.WOMAN:
-        result = 'Женский';
-        break;
-    }
-    return result;
-  };
-
-  genderToString(gender: Gender): string {
-
-    let result: string;
-
-    switch (gender) {
-      case Gender.MAN:
-        result = 'MAN';
-        break;
-      case Gender.WOMAN:
-        result = 'WOMAN';
-        break;
-    }
-    return result;
-  };
-
-  genderStringToStringRus(gender: string): string {
-
-    let result: string;
-    const g: Gender = <Gender>Gender[gender];
-
-    switch (g) {
-      case Gender.MAN:
-        result = 'Мужской';
-        break;
-      case Gender.WOMAN:
-        result = 'Женский';
-        break;
-    }
-    return result;
   };
 
 }

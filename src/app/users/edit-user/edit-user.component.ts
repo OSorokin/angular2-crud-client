@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { isSuccess } from '@angular/http/src/http_utils';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
+import { IMyDateModel } from 'mydatepicker';
 
 import { UsersService } from '../../shared/users/users.service';
 import { User } from '../../shared/users/user.model';
-import { Gender } from '../../shared/users/gender.enum';
-
 import { datePickerOptions } from '../../shared/date-picker-options';
-import { IMyDateModel } from 'mydatepicker';
 
 @Component({
   moduleId: module.id,
@@ -24,13 +19,13 @@ export class EditUserComponent implements OnInit {
   user: User;
   projects: string[] = ['Project1', 'Project2', 'Project3'];
   positions: string[] = ['Post1', 'Post2', 'Post3'];
-  keys: Gender[] = [Gender.MAN, Gender.WOMAN];
+  genders: string [] = ['Мужской', 'Женский'];
   userBirthDate: string;
 
   myDatePickerOptions = datePickerOptions;
 
   isSuccessUpdateUser = false;
-  isErrorUpdateser = false;
+  isErrorUpdateUser = false;
 
   constructor(private route: ActivatedRoute,
               public userService: UsersService) {
@@ -47,10 +42,13 @@ export class EditUserComponent implements OnInit {
   updateUser(): void {
     const user = this.user;
     user.birth_date = this.userBirthDate;
-    this.userService.update(this.id, user).then(res => {
-      this.isSuccessUpdateUser = !isSuccess(res.id);
-      this.isErrorUpdateser = isSuccess(res.id);
-    });
+
+    this.userService.update(this.id, user).subscribe(
+      (res) => {
+        this.isSuccessUpdateUser = !isSuccess(res.id);
+        this.isErrorUpdateUser  = isSuccess(res.id);
+      }
+    );
   }
 
   onDateChanged(event: IMyDateModel): void {

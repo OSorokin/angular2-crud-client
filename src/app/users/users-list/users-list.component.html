@@ -13,6 +13,7 @@
       <th>Пост</th>
       <th>Проект</th>
       <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +22,7 @@
       <td>{{user?.name}}</td>
       <td>{{user?.surname}}</td>
       <th class="hidden-xs">{{user?.birth_date}}</th>
-      <td class="hidden-xs">{{userService.genderStringToStringRus(user.gender)}}</td>
+      <td class="hidden-xs">{{user.gender}}</td>
       <td class="hidden-xs">{{user?.email}}</td>
       <td>{{user?.position}}</td>
       <td>{{user?.project}}</td>
