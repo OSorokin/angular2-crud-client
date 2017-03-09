@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-4 col-sm-4 col-md-4">
-    <a class="btn btn-default" routerLink="" role="button">К списку</a>
+    <a class="btn btn-default" routerLink="" role="button">{{ 'COMMONS.TO_LIST' | translate }}</a>
   </div>
   <div class="col-xs-8 col-sm-8 col-md-8">
     <h4 class="pull-right" *ngIf="user">USER ID:{{user.id}}</h4>
@@ -13,14 +13,14 @@
       <input name="name" [(ngModel)]="user.name" class="form-control" placeholder="Имя"
              #name="ngModel" required>
       <div [hidden]="name.valid || name.untouched" class="valid-error">
-        Не указано имя
+        {{ 'USER.ERRORS.VALIDATE.NAME' | translate }}
       </div>
     </div>
     <div class="form-group">
       <input name="surname" [(ngModel)]="user.surname" class="form-control" placeholder="Фамилия"
              #surname="ngModel" required>
       <div [hidden]="surname.valid || surname.untouched" class="valid-error">
-        Не указана фамилия
+        {{ 'USER.ERRORS.VALIDATE.SURNAME' | translate }}
       </div>
     </div>
     <div class="form-group">
@@ -29,7 +29,7 @@
                       [(ngModel)]="user.birth_date" #birth_date="ngModel"
                       pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
       <div [hidden]="birth_date.pristine == true || birth_date.valid == false" class="valid-error">
-        Некорректная дата рождения
+        {{ 'USER.ERRORS.VALIDATE.BIRTH_DATE' | translate }}
       </div>
     </div>
     <div class="form-group">
@@ -43,7 +43,7 @@
       <input name="email" [(ngModel)]="user.email" class="form-control" placeholder="E-mail"
              #email="ngModel" required pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"/>
       <div [hidden]="email.valid || email.untouched" class="valid-error">
-        Некорректный email
+        {{ 'USER.ERRORS.VALIDATE.EMAIL' | translate }}
       </div>
     </div>
     <div class="form-group">
@@ -60,12 +60,12 @@
       <div class="col-xs-4 col-sm-4 col-md-4">
         <button type="submit"
                 [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid "
-                class="btn btn-default" (click)="updateUser()">Изменить
+                class="btn btn-default" (click)="updateUser()"> {{ 'COMMONS.UPDATE' | translate }}
         </button>
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8">
-        <div *ngIf="isSuccessUpdateUser" class="alert-send alert-success">Данные изменены</div>
-        <div *ngIf="isErrorUpdateUser" class="alert-send alert-danger">Не удалось изменить данные</div>
+        <div *ngIf="isSuccessUpdateUser" class="alert-send alert-success">{{ 'USER.SUCCESS.UPDATE' | translate }}</div>
+        <div *ngIf="isErrorUpdateUser" class="alert-send alert-danger">{{ 'USER.ERRORS.UPDATE' | translate }}</div>
       </div>
     </div>
   </form>

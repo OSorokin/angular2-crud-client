@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../shared/models/user.model';
 import { UsersService } from '../../shared/services/users.service';
+import { TranslateService } from 'ng2-translate';
 
 
 @Component({
@@ -14,9 +15,11 @@ export class UsersListComponent implements OnInit {
 
   users: Array<User>;
 
-  constructor(public userService: UsersService, private router: Router) {
-
-  }
+  constructor(
+    public userService: UsersService,
+    private router: Router,
+    private translate: TranslateService
+  ) {}
 
   ngOnInit() {
     this.getUsers();

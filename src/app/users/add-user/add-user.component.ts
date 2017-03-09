@@ -5,6 +5,7 @@ import { IMyDateModel } from 'mydatepicker';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { datePickerOptions } from '../../shared/date-picker-options';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +26,10 @@ export class AddUserComponent {
   isSuccessAddUser = false;
   isErrorAddUser = false;
 
-  constructor(public userService: UsersService) {}
+  constructor(
+    public userService: UsersService,
+    private translate: TranslateService
+  ) {}
 
   addUser(): void {
     const user = this.user;

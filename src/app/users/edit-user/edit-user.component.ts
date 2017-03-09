@@ -6,6 +6,7 @@ import { IMyDateModel } from 'mydatepicker';
 import { UsersService } from '../../shared/services/users.service';
 import { User } from '../../shared/models/user.model';
 import { datePickerOptions } from '../../shared/date-picker-options';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -27,9 +28,11 @@ export class EditUserComponent implements OnInit {
   isSuccessUpdateUser = false;
   isErrorUpdateUser = false;
 
-  constructor(private route: ActivatedRoute,
-              public userService: UsersService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    public userService: UsersService,
+    private translate: TranslateService)
+  {}
 
   ngOnInit() {
     this.route.params
