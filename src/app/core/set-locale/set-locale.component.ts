@@ -3,8 +3,7 @@ import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector: 'app-set-locale',
-  templateUrl: './set-locale.component.html',
-  styleUrls: ['./set-locale.component.sass']
+  templateUrl: './set-locale.component.html'
 })
 
 export class SetLocaleComponent {

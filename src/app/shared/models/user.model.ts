@@ -9,4 +9,8 @@ export class User {
   position: string;
   project: string;
 
+  constructor( values: Object = {} ) {
+    Object.assign( this, values);
+  }
+
 }

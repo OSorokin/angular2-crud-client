@@ -26,9 +26,9 @@
     <div class="form-group">
       <my-date-picker name="birth_date" placeholder="Дата рождения" [options]="myDatePickerOptions"
                       (dateChanged)="onDateChanged($event)"
-                      [(ngModel)]="user.birth_date" #birth_date="ngModel"
+                      [(ngModel)]="dateModel" #birth_date="ngModel"
                       pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
-      <div [hidden]="birth_date.pristine == true || birth_date.valid == false" class="valid-error">
+      <div [hidden]="birth_date.pristine || !birth_date.valid" class="valid-error">
         {{ 'USER.ERRORS.VALIDATE.BIRTH_DATE' | translate }}
       </div>
     </div>
@@ -59,7 +59,7 @@
     <div class="row">
       <div class="col-xs-4 col-sm-4 col-md-4">
         <button type="submit"
-                [disabled]="name.invalid || surname.invalid || birth_date.pristine == true || birth_date.invalid == false || email.invalid "
+                [disabled]="name.invalid || surname.invalid || (birth_date.dirty && !birth_date.invalid) || (birth_date.pristine && !birth_date.invalid) || email.invalid "
                 class="btn btn-default" (click)="updateUser()"> {{ 'COMMONS.UPDATE' | translate }}
         </button>
       </div>

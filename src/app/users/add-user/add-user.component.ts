@@ -32,10 +32,17 @@ export class AddUserComponent {
   ) {}
 
   addUser(): void {
-    const user = this.user;
-    user.birth_date = this.userBirthDate;
+    const newUser = new User({
+      name: this.user.name,
+      surname: this.user.surname,
+      birth_date: this.userBirthDate,
+      gender: this.user.gender,
+      email: this.user.email,
+      position: this.user.position,
+      project: this.user.project
+    });
 
-    this.userService.create(user).subscribe(res => {
+    this.userService.create(newUser).subscribe(res => {
       this.isSuccessAddUser = !isSuccess(res.id);
       this.isErrorAddUser = isSuccess(res.id);
     });
