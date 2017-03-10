@@ -1,0 +1,167 @@
+<div *ngIf="curAddTemplate">
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6">
+      <h4 class="pull-left" *ngIf="user">{{ 'COMMONS.ADD_USER_PAGE_TITLE' | translate}}</h4>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6">
+    </div>
+  </div>
+
+  <alert type="success" dismissible="true" *ngIf="isSuccessAddUser">{{ 'USER.SUCCESS.ADD' | translate }}</alert>
+  <alert type="danger" dismissible="true" *ngIf="isErrorAddUser">{{ 'USER.ERRORS.ADD' | translate }}</alert>
+  <form>
+
+    <div class="form-group">
+      <input name="name" [(ngModel)]="user.name" class="form-control" placeholder="Имя"
+             #name="ngModel" required>
+      <alert type="danger" [hidden]="name.valid || name.untouched" class="valid-error">
+        {{ 'USER.ERRORS.VALIDATE.NAME' | translate }}
+      </alert>
+    </div>
+
+    <div class="form-group">
+      <input name="surname" [(ngModel)]="user.surname" class="form-control" placeholder="Фамилия"
+             #surname="ngModel" required>
+      <alert type="danger" [hidden]="surname.valid || surname.untouched" class="valid-error">
+        {{ 'USER.ERRORS.VALIDATE.SURNAME' | translate }}
+      </alert>
+    </div>
+
+    <div class="form-group">
+      <my-date-picker name="birth_date" [options]="myDatePickerOptions" placeholder="Дата рождения"
+                      (dateChanged)="onDateChanged($event)"
+                      [(ngModel)]="user.birth_date" #birth_date="ngModel"
+                      pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
+      <alert type="danger" [hidden]="birth_date.pristine || !birth_date.valid" class="valid-error">
+        {{ 'USER.ERRORS.VALIDATE.BIRTH_DATE' | translate }}
+      </alert>
+    </div>
+
+    <div class="form-group">
+      <select class="form-control" name="gender" [(ngModel)]="user.gender" #gender="ngModel" required>
+        <option *ngFor="let item of genders" [value]="item">
+          {{item}}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <input name="email" [(ngModel)]="user.email" class="form-control" placeholder="E-mail"
+             #email="ngModel" required pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"/>
+      <alert type="danger" [hidden]="email.valid || email.untouched" class="valid-error">
+        {{ 'USER.ERRORS.VALIDATE.EMAIL' | translate }}
+      </alert>
+    </div>
+
+    <div class="form-group">
+      <select class="form-control" name="position" [(ngModel)]="user.position" #position="ngModel" required>
+        <option *ngFor="let position of positions" [value]="position">{{position}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <select class="form-control" name="project" [(ngModel)]="user.project" #project="ngModel" required>
+        <option *ngFor="let project of projects" [value]="project">{{project}}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <button type="button" class="btn btn-primary"
+                [disabled]="name.invalid || surname.invalid || birth_date.pristine || !birth_date.invalid || email.invalid || gender.pristine || project.pristine || position.pristine "
+                (click)="addUser()">{{ 'COMMONS.ADD' | translate }}
+        </button>
+        <a class="btn btn-default" routerLink="" role="button">{{ 'COMMONS.BACK' | translate }}</a>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-8"></div>
+    </div>
+
+  </form>
+
+</div>
+
+<div *ngIf="curEditTemplate">
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6">
+      <h4 class="pull-left" *ngIf="user">{{ 'COMMONS.EDIT_USER_PAGE_TITLE' | translate}}, ID:{{user.id}}</h4>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6">
+    </div>
+  </div>
+
+  <alert type="success" dismissible="true" *ngIf="isSuccessUpdateUser">{{ 'USER.SUCCESS.UPDATE' | translate }}</alert>
+  <alert type="danger" dismissible="true" *ngIf="isErrorUpdateUser">{{ 'USER.ERRORS.UPDATE' | translate }}</alert>
+
+  <div *ngIf="user">
+    <form>
+
+      <div class="form-group">
+        <input name="name" [(ngModel)]="user.name" class="form-control" placeholder="Имя"
+               #name="ngModel" required>
+        <alert type="danger" [hidden]="name.valid || name.untouched" class="valid-error">
+          {{ 'USER.ERRORS.VALIDATE.NAME' | translate }}
+        </alert>
+      </div>
+
+      <div class="form-group">
+        <input name="surname" [(ngModel)]="user.surname" class="form-control" placeholder="Фамилия"
+               #surname="ngModel" required>
+        <alert type="danger" [hidden]="surname.valid || surname.untouched" class="valid-error">
+          {{ 'USER.ERRORS.VALIDATE.SURNAME' | translate }}
+        </alert>
+      </div>
+
+      <div class="form-group">
+        <my-date-picker name="birth_date" placeholder="Дата рождения" [options]="myDatePickerOptions"
+                        (dateChanged)="onDateChanged($event)"
+                        [(ngModel)]="dateModel" #birth_date="ngModel"
+                        pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d"></my-date-picker>
+        <alert type="danger" [hidden]="birth_date.pristine || !birth_date.valid" class="valid-error">
+          {{ 'USER.ERRORS.VALIDATE.BIRTH_DATE' | translate }}
+        </alert>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control" name="gender" [(ngModel)]="user.gender" #gender="ngModel" required>
+          <option *ngFor="let item of genders" [value]="item">
+            {{item}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input name="email" [(ngModel)]="user.email" class="form-control" placeholder="E-mail"
+               #email="ngModel" required pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"/>
+        <alert type="danger" [hidden]="email.valid || email.untouched" class="valid-error">
+          {{ 'USER.ERRORS.VALIDATE.EMAIL' | translate }}
+        </alert>
+      </div>
+      <div class="form-group">
+        <select class="form-control" name="position" [(ngModel)]="user.position" #position="ngModel" required>
+          <option *ngFor="let position of positions" [value]="position">{{position}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select class="form-control" name="project" [(ngModel)]="user.project" #project="ngModel" required>
+          <option *ngFor="let project of projects" [value]="project">{{project}}</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+          <button type="button" class="btn btn-primary"
+                  [disabled]="name.invalid || surname.invalid || (birth_date.dirty && !birth_date.invalid) || (birth_date.pristine && !birth_date.invalid) || email.invalid "
+                  (click)="updateUser()"> {{ 'COMMONS.UPDATE' | translate }}
+          </button>
+          <a class="btn btn-default" routerLink="" role="button">{{ 'COMMONS.BACK' | translate }}</a>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8"></div>
+      </div>
+
+    </form>
+  </div>
+
+</div>

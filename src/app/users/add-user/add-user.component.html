@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col-xs-4 col-sm-4 col-md-4">
+    <h4 class="pull-left" *ngIf="user">ADD USER</h4>
+  </div>
+  <div class="col-xs-8 col-sm-8 col-md-8">
+  </div>
+</div>
+
 <alert type="success" dismissible="true" *ngIf="isSuccessAddUser">{{ 'USER.SUCCESS.ADD' | translate }}</alert>
 <alert type="danger" dismissible="true" *ngIf="isErrorAddUser">{{ 'USER.ERRORS.ADD' | translate }}</alert>
 <form>

@@ -27,6 +27,8 @@
     "ADD_USER": "Add user",
     "UPDATE": "Update",
     "TO_LIST": "To list",
-    "BACK": "Back"
+    "BACK": "Back",
+    "ADD_USER_PAGE_TITLE":"ADD USER",
+    "EDIT_USER_PAGE_TITLE":"EDIT USER"
   }
 }
