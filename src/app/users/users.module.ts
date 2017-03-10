@@ -5,15 +5,14 @@ import { FormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
-import { AddUserComponent } from './add-user/add-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
 import { UsersListComponent } from './users-list/users-list.component';
+
+import { AddEditUserComponent } from './add-edit-user/add-edit-user.component';
 
 import { UsersRoutingModule } from './users.routing';
 import { UsersService } from '../shared/services/users.service';
 import { TranslateModule } from 'ng2-translate';
 import { AlertModule } from 'ng2-bootstrap';
-
 
 // определение маршрутов
 @NgModule({
@@ -28,9 +27,8 @@ import { AlertModule } from 'ng2-bootstrap';
     AlertModule.forRoot()
   ],
   declarations: [
-    AddUserComponent,
-    EditUserComponent,
-    UsersListComponent
+    UsersListComponent,
+    AddEditUserComponent
   ],
   providers: [ UsersService ]
 
