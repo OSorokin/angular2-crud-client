@@ -14,6 +14,9 @@ import { CoreModule } from './core/core.module';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
 
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, './assets/i18n', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -28,7 +31,7 @@ import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-tra
     AppRoutingModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
-      useFactory: ( http: Http ) => new TranslateStaticLoader( http, '/assets/i18n', '.json' ),
+      useFactory: (createTranslateLoader),
       deps: [Http]
     })
   ],

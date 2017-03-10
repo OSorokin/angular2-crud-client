@@ -12,6 +12,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users.routing';
 import { UsersService } from '../shared/services/users.service';
 import { TranslateModule } from 'ng2-translate';
+import { AlertModule } from 'ng2-bootstrap';
 
 
 // определение маршрутов
@@ -23,7 +24,8 @@ import { TranslateModule } from 'ng2-translate';
     FormsModule,
     UsersRoutingModule,
     MyDatePickerModule,
-    TranslateModule
+    TranslateModule,
+    AlertModule.forRoot()
   ],
   declarations: [
     AddUserComponent,
